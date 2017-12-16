@@ -12,8 +12,7 @@ module.exports = {
 
     resolve: {
         alias: {
-            // logo: path.resolve(__dirname, './assets/images.png'),
-            // content: path.resolve(__dirname, './src/content.js')
+            
         }
     },
 
@@ -23,29 +22,7 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				exclude: /(node_modules|bower_components)/,
 				use: ['babel-loader']
-            },
-            // {
-            //     test: /\.css$/,
-            //     use:['style-loader', 'css-loader']
-            // },
-            // {
-            //     test: /\.(png|svg|jpg|gif)$/,
-            //     use: {
-            //         loader: 'url-loader',
-            //         options: {
-            //           limit: 8192
-            //         }
-            //     }
-            // },
-            // {
-            //     test: /\.(woff|woff2|eot|ttf|otf)$/,
-            //     use: {
-            //         loader: 'url-loader',
-            //         options: {
-            //           limit: 8192
-            //         }
-            //     }
-            // }
+            }
         ]
     },
 
