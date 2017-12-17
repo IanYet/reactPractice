@@ -1,40 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class Clock extends React.Component {
+class Popper extends React.Component{
 
-    constructor(props) {
-        super(props)
-        this.state = {date: new Date()}
+    constructor(){
+        super()
+        this.state = {name: "react event"}
     }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        )
+    preventPop(name, e){
+        e.preventDefault()
+        alert(name)
     }
 
-    componentWillUnmount() {
-        clearInterval(this.timerID)
-    }
-
-    tick() {
-        this.setState({
-            date: new Date()
-        })
-    }
     render() {
         return (
             <div>
-                <h1>hello</h1>
-                <h2> it is {this.state.date.toLocaleTimeString()}</h2>
+                <p>hello</p>
+                <a href="https://reactjs.org" onClick={this.preventPop.bind(this, this.state.name)}>click</a>
             </div>
         )
     }
 }
 
 ReactDOM.render(
-    <Clock />,
+    <Popper />,
     document.getElementById('root')
 )
