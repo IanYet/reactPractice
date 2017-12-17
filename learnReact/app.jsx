@@ -1,29 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class Popper extends React.Component{
-
-    constructor(){
-        super()
-        this.state = {name: "react event"}
-    }
-
-    preventPop(name, e){
-        e.preventDefault()
-        alert(name)
-    }
-
-    render() {
-        return (
-            <div>
-                <p>hello</p>
-                <a href="https://reactjs.org" onClick={this.preventPop.bind(this, this.state.name)}>click</a>
-            </div>
-        )
-    }
+function LoginButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            login
+        </button>
+    )
+}
+function LogouButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            logou
+        </button>
+    )
 }
 
-ReactDOM.render(
-    <Popper />,
-    document.getElementById('root')
-)
+class LoginControl extends React.Component {
+    
+}
