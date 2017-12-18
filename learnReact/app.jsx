@@ -1,25 +1,29 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-function People(props) {
-    return (
-        <p>{props.name}: {props.age}</p>
-    )
-}
+class BindData extends React.Component{
+    constructor (props) {
+        super(props)
 
-function PeopleList(props) {
-    const lists = props.lists
+        this.state = {value: ''}
+        this.handleChange = this.handleChange.bind(this)
+    }
 
-    const peoples = lists.map((list) => <People name={list.name} age={list.age} key={list.id} />)
+    handleChange(e) {
+        this.setState({value: e.target.value})
+    }
 
-    return (
-        <div>
-            {peoples}
-        </div>
-    )
+    render() {
+        return (
+            <div className={this.props.className}>
+                <p>{this.state.value}</p>
+                <input type="text" onChange={this.handleChange} value={this.state.value}/>
+            </div>
+        )
+    }
 }
 
 ReactDOM.render(
-    <PeopleList lists={[{name:'1', age:'1', id:'1'},{name:'2', age:'2', id:'2'},{name:'3', age:'3', id:'3'}]}/>,
+    <BindData className='hello'/>,
     document.getElementById('root')
 )
