@@ -1,56 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-function LoginButton(props) {
+function People(props) {
     return (
-        <button onClick={props.onClick}>
-            login
-        </button>
-    )
-}
-function LogouButton(props) {
-    return (
-        <button onClick={props.onClick}>
-            logou
-        </button>
+        <p>{props.name}: {props.age}</p>
     )
 }
 
-class LoginControl extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleLoginClick = this.handleLoginClick.bind(this)
-        this.handleLogouClick = this.handleLogouClick.bind(this)
-        this.state = {isLoggedIn: true}
-    }
+function PeopleList(props) {
+    const lists = props.lists
 
-    handleLoginClick() {
-        this.setState({isLoggedIn: true})
-    }
+    const peoples = lists.map((list) => <People name={list.name} age={list.age} key={list.id} />)
 
-    handleLogouClick() {
-        this.setState({isLoggedIn: false})
-    }
-
-    render() {
-        const isLoggedIn = this.state.isLoggedIn
-
-        let button = null
-        if(isLoggedIn){
-            button = <LogouButton onClick={this.handleLogouClick} />
-        }else {
-            button = <LoginButton onClick={this.handleLoginClick} />
-        }
-
-        return (
-            <div>
-                {button}
-            </div>
-        )
-    }
+    return (
+        <div>
+            {peoples}
+        </div>
+    )
 }
 
 ReactDOM.render(
-    <LoginControl />,
+    <PeopleList lists={[{name:'1', age:'1', id:'1'},{name:'2', age:'2', id:'2'},{name:'3', age:'3', id:'3'}]}/>,
     document.getElementById('root')
 )
