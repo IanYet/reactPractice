@@ -88,12 +88,13 @@ const scaleNames = {
             onTemperatureChange={this.handleFahrenheitChange} />
           <BoilingVerdict
             celsius={parseFloat(celsius)} />
+          {this.props.children}
         </div>
       );
     }
   }
   
   ReactDOM.render(
-    <Calculator />,
+    <Calculator>hello</Calculator>,
     document.getElementById('root')
   );  
