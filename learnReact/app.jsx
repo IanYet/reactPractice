@@ -1,32 +1,45 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-class CustomTextInput extends React.Component{
+//it is strange. 大多数情况下应该可以用states或者props解决
+
+function CustomInputText(props) {
+    return (
+        <div>
+            <input id="woshizijiedian" ref={props.inputRef} />
+        </div>
+    )
+}
+
+function Parent(props) {
+    return (
+        <div>
+            My Input: <CustomInputText inputRef={props.inputRef} />
+            {props.children}
+        </div>
+    )
+}
+
+class Grantparent extends React.Component {
+
     constructor(props){
         super(props)
-        this.focus = this.focus.bind(this)
+        this.alerts = this.alerts.bind(this)
     }
 
-    componentDidMount() {
-        this.textInput.focus()
+    alerts(){
+        alert(this.inputElement.id)
     }
-
-    focus() {
-        console.log(this.textInput)
-        return this.textInput.focus()
-    }
-
     render() {
         return (
-            <div>
-                <input id="01" type="text" ref={(input) => {this.textInput = input}} />
-                <input type="button" value="focus the text input" onClick={this.focus}/>
-            </div>
+            <Parent inputRef={el => this.inputElement = el}>
+                <input type="button" value="dianwoxianshishuishishabi" onClick={this.alerts}/>
+            </ Parent>
         )
     }
 }
 
 ReactDOM.render(
-    <CustomTextInput />,
-    document.getElementById('root')
+    <Grantparent />,
+    document.getElementById("root")
 )
