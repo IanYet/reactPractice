@@ -1,136 +1,62 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-//组件的生命周期函数是否冒泡？
+const appRoot = document.getElementById("app-root")
+const modalRoot = document.getElementById("root")
 
-class Son extends React.Component{
-    constructor(props) {
-        super(props)
-    }
-
-    componentWillUnmount() {
-        console.log("son unmount")
-    }
-
-    render() {
-        return(
-            <p>son</p>
-        )
-    }
-}
-
-class NewS extends React.Component{
-    constructor(props) {
-        super(props)
-    }
-
-    componentDidMount() {
-        console.log("new son mount")
-    }
-
-    render() {
-        return(
-            <p>new Son</p>
-        )
-    }
-}
-
-class Par extends React.Component{
-    constructor(props) {
-        super(props)
-    }
-
-    componentWillUnmount() {
-        console.log("parent unmount")
-    }
-
-    render() {
-        return(
-            <div>
-                <p>parent</p>
-                {this.props.children}
-            </div>
-        )
-    }
-}
-
-class NewP extends React.Component{
+class Modal extends React.Component {
     constructor(props){
         super(props)
+        this.el = document.createElement('div')
     }
 
-    componentDidMount() {
-        console.log("new Parent mount")
+    componentDidMount(){
+        modalRoot.appendChild(this.el)
+    }
+
+    componentWillUnmount(){
+        modalRoot.removeChild(this.el)
     }
 
     render() {
-        return(
-            <div>
-                <p>new Parent</p>
-                {this.props.children}
-            </div>
+        return ReactDOM.createPortal(
+            this.props.children,
+            this.el
         )
     }
 }
 
-class Home extends React.Component{
+function Child() {
+    return(
+        <div className="modal">
+            <button>Click</button>
+        </div>
+    )
+}
 
-    constructor(props){
+class Parent extends React.Component {
+    constructor(props) {
         super(props)
-        this.handleToggle = this.handleToggle.bind(this)
-        this.state = {
-            toggle: false
-        }
+        this.state = {clicks:0}
+        this.handleClick = this.handleClick.bind(this)
     }
 
-    handleToggle(event) {
-        let state = this.state.toggle
-
-        if(state){
-            this.setState({toggle: false})
-        }else {
-            this.setState({toggle: true})
-        }
-    }
-
-    componentDidMount() {
-        console.log("home mount");
-    }
-
-    componentWillUpdate() {
-        console.log("home will upgrade");
-    }
-
-    componentDidUpdate() {
-        console.log("home upgrade")
-    }
-
-    componentWillUnmount() {
-        console.log("home unmount")
+    handleClick() {
+        this.setState(prevState => ({
+            clicks: prevState.clicks + 1
+        }))
     }
 
     render() {
-        let state = this.state.toggle
-        let group = null
-
-        // console.log(state);
-
-        if(state){
-            group = <NewP><NewS /></NewP>
-        }else {
-            group = <Par><Son /></Par>
-        }
-
         return(
-            <div>
-                <button onClick={this.handleToggle}>toggle</button>
-                {group}
+            <div onClick={this.handleClick}>
+                <p>number of clicks: {this.state.clicks}</p>
+                <Modal>
+                    <Child />
+                </Modal>
             </div>
         )
     }
 }
 
-ReactDOM.render(
-    <Home />,
-    document.getElementById('root')
-)
+ReactDOM.render(<Parent/>, appRoot)
