@@ -1,62 +1,48 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const appRoot = document.getElementById("app-root")
-const modalRoot = document.getElementById("root")
-
-class Modal extends React.Component {
-    constructor(props){
-        super(props)
-        this.el = document.createElement('div')
-    }
-
-    componentDidMount(){
-        modalRoot.appendChild(this.el)
-    }
-
-    componentWillUnmount(){
-        modalRoot.removeChild(this.el)
-    }
-
-    render() {
-        return ReactDOM.createPortal(
-            this.props.children,
-            this.el
-        )
+const DataSource = {
+    nameStore: [],
+    propStore: [],
+    get name() { return this.nameStore},
+    set name(val) { 
+        this.nameStore.push(val)
+        if(this.handle){
+            this.handle()
+        }
+    },
+    get prop() { return this.propStore},
+    set prop(val) {
+        if(this.handle){
+            this.handle
+        }
+        this.propStore.push(val)
     }
 }
 
-function Child() {
-    return(
-        <div className="modal">
-            <button>Click</button>
-        </div>
-    )
+DataSource.addChangeListener = (handle) => {
+    DataSource.handle = handle 
 }
 
-class Parent extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {clicks:0}
-        this.handleClick = this.handleClick.bind(this)
-    }
+function withSubcription(WrappedComponent, selectData) {
+    return class extends React.Component {
+        constructor(props){
+            super(props)
 
-    handleClick() {
-        this.setState(prevState => ({
-            clicks: prevState.clicks + 1
-        }))
-    }
+            this.handleChange = this.handleChange.bind(this)
+            this.state = {
+                data: selectData(DataSource, props)
+            }
+        }
 
-    render() {
-        return(
-            <div onClick={this.handleClick}>
-                <p>number of clicks: {this.state.clicks}</p>
-                <Modal>
-                    <Child />
-                </Modal>
-            </div>
-        )
+        componentDidMount() {
+            DataSource.addChangeListener(this.handleChange)
+        }
+
+        handleChange() {
+            this.setState({
+                data: selectData(DataSource, this.props)
+            })
+        }
     }
 }
-
-ReactDOM.render(<Parent/>, appRoot)
