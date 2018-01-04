@@ -1,7 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+const getDisplayName = component => component.displayName || component.name || 'Component';
+
 const hocFactory = WrappedComponent => class HOC extends React.Component{
+
+    static displayName = `HOC(${getDisplayName(WrappedComponent)})`
+
     render() {
         return(
             <div>
