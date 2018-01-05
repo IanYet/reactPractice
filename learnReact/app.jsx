@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 //说白了，高阶组件就是一种继承，用一个工厂生产所有类似的组件
 //反向继承真是low到爆炸
 //与父组件的区别。。。emmmm之后再整理吧。目前感觉比父组件简单一些，但是比父组件hack一些。
-//父组件参考app52
+//父组件参考app51
 const getDisplayName = component => component.displayName || component.name || 'Component';
 
 const hocFactory = (title = 'default') => WrappedComponent => class HOC extends React.Component{
