@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const scaleNames = {
+  const scaleNames = {
     c: 'Celsius',
     f: 'Fahrenheit'
   };
