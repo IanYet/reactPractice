@@ -14,6 +14,7 @@ let AddTodo = ({ dispatch }) => {
                         return
                     }
                     dispatch(addTodo(input.value))
+                    input.value = ''
                 }
             }>
                 <input ref={node => {input = node}}/>
@@ -24,3 +25,6 @@ let AddTodo = ({ dispatch }) => {
         </div>
     )
 }
+AddTodo = connect()(AddTodo)
+
+export default AddTodo
