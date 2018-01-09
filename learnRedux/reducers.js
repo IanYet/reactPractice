@@ -10,7 +10,7 @@ console.log(actions)
 function visibilityFilter( state = SHOW_ALL, action) {
     switch (action.type) {
         case actions.SET_VISIBILITY_FILTER:
-        return actions.filter
+        return action.filter
         default:
         return state
     }
@@ -41,6 +41,8 @@ function todos(state = [], action) {
     }
 }
 
+//这里会损失很大性能吧
+//emm也不一定。反正都要switch的
 const todoApp = combineReducers({
     visibilityFilter,
     todos
